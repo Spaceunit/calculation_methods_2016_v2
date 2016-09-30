@@ -290,7 +290,7 @@ class Givensrotation:
         pass
 
     def lowzeroing(self, A):
-        print("Low zeroing")
+        print("Low zeroing (step when matrix transformed into upper triangular form)")
         H = matrix.Matrix(A.matrix, "H-matrix")
         self.qm.makedimatrix(A.len[0])
         i = 0
@@ -308,10 +308,10 @@ class Givensrotation:
                 T.chel(i, j, -s)
                 T.chel(j, i, s)
 
-                print(i + 1,j + 1)
+                print("i: ",i + 1, "j: ",j + 1)
                 print("S=", s, " is", H.getel(j,i), "/((", H.getel(i,i), ")^2 + (", H.getel(j,i), ")^2)^(1/2)")
                 print("C=", c, " is", H.getel(i, i), "/((", H.getel(i, i), ")^2 + (", H.getel(j, i), ")^2)^(1/2)")
-
+                print("Ok so we hawe Givense matrix... and it is allready transposed")
                 T.showmatrix()
 
                 self.q0.append(T)
@@ -333,9 +333,10 @@ class Givensrotation:
                 H.showmatrix()
                 j += 1
             i += 1
+        print("End of II-part step")
         return H
     def uhessenberg(self, A):
-        print("Hessenberg")
+        print("I-part Hessenberg matrix.")
         H = matrix.Matrix(A.matrix, "H-matrix")
         H0 = H.copy()
         H0.rename("H0-matrix")
@@ -346,20 +347,24 @@ class Givensrotation:
             j = 0
             while j < i - 1:
                 l = j + 1
-                print(i , j, l)
+                print("print i: ", i + 1, "print j: ", j + 1, "(j-1) is l = j+1 = ", l + 1)
                 T = self.hmaket(H, l, i)
+                print("We have T-matrix")
                 T.showmatrix()
                 T.transpose()
                 H = T.matrixm(H, self.accuracy)
                 H.chel(i, j, 0)
                 T.transpose()
                 H.showmatrix()
+                print("New look of H-matrix after multiplication: T-transposed * H")
                 #H0 = H.copy()
                 H = H.matrixm(T, self.accuracy)
                 #H.chel(i, j, 0)
+                print("New look of H-matrix after multiplication:  H * T")
                 H.showmatrix()
                 j += 1
             i += 1
+        print("End of I-part step")
         return H
 
     def ugivencerot(self, A):
@@ -380,37 +385,30 @@ class Givensrotation:
 
     def resolve(self):
         self.am.showmatrix()
-        # H = self.lowzeroing(self.am)
         i = 0
         H = matrix.Matrix(self.am.matrix, "H-matrix")
-        #H = self.lowzeroing3(H)
         H = self.uhessenberg(H)
-        print("lol")
-        #H.chel(2, 1, -H.getel(2, 1))
-        #H.chel(1, 2, -H.getel(1, 2))
+        print("II-part QR-factorization")
         H.showmatrix()
         while i < 100:
-            print(i,"----->")
+            print("Step----->", i + 1)
             R = self.lowzeroing(H)
             self.makeqm()
+            print("New look of Q-matrix after multiplication:  Q * T")
             self.qm.showmatrix()
             H.showmatrix()
             H = R.matrixm(self.qm, self.accuracy)
             H.showmatrix()
             i += 1
-        # H = self.lowzeroing3(H)
-        # H.showmatrix()
 
     def resolve0(self):
         self.am.showmatrix()
-        # H = self.lowzeroing(self.am)
         i = 0
         H = matrix.Matrix(self.am.matrix, "H-matrix")
-        # H = self.lowzeroing3(H)
         H = self.uhessenberg(H)
 
         H.showmatrix()
-        while i < 100000:
+        while i < 100:
             print(i, "----->")
             H = self.ugivencerot(H)
             self.makeqm()
@@ -420,12 +418,7 @@ class Givensrotation:
             H = self.qm.matrixm(H, self.accuracy)
             H.showmatrix()
             i += 1
-            # H = self.lowzeroing3(H)
-            # H.showmatrix()
     def makeqm(self):
-        #self.q0.reverse()
         while len(self.q0) > 0:
             T = self.q0.pop()
-            #T.transpose()
             self.qm = self.qm.matrixm(T, self.accuracy)
-            #self.qm.showmatrix()

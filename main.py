@@ -8,7 +8,7 @@ import qrf
 class Work:
     def __init__(self):
         self.a = matrix.Matrix([[0]],"Initial matrix")
-        self.accuracy = 2
+        self.accuracy = 3
         self.commands = {
             "none": 0,
             "exit": 1,
