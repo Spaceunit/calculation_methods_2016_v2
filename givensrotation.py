@@ -5,6 +5,7 @@ import excel_transfer
 
 class Givensrotation:
     def __init__(self):
+        self.sta = 3
         self.am = matrix.Matrix([], "Initial matrix")
         self.im = matrix.Matrix([], "I-matrix")
         self.qm = matrix.Matrix([], "Q-matrix")
@@ -73,6 +74,8 @@ class Givensrotation:
             self.um = self.am.copy()
             self.um.rename("U-matrix")
             self.am.showmatrix()
+            print("Our matrix with accuracy: 3")
+            self.am.showmatrixaccuracy3()
             # self.dv.showvector()
             print("Matrix is correct? (enter - yes/n - no)")
             command = input("-> ")
@@ -177,6 +180,8 @@ class Givensrotation:
                 pass
             elif (task == 6):
                 self.am.showmatrix()
+                print("Our matrix with accuracy: 3")
+                self.am.showmatrixaccuracy3()
                 # self.dv.showvector()
                 pass
             elif (task == 8):
@@ -252,6 +257,8 @@ class Givensrotation:
         T.chel(i, j, -self.makesnew(H, i, j))
         T.chel(j, i, self.makesnew(H, i, j))
         T.showmatrix()
+        print("Our matrix with accuracy: 3")
+        T.showmatrixaccuracy3()
         return T
         pass
 
@@ -273,8 +280,12 @@ class Givensrotation:
         s = round(aij / math.sqrt(math.pow(ajj, 2) + math.pow(aij, 2)), self.accuracy)
         if math.fabs(s) < 1 / (10 ** self.accuracy):
             s = 0
-        print("S=",s," is", aij, "/((", ajj, ")^2 + (", aij, ")^2)^(1/2)")
+        print("")
         print("i: ", i, "j: ", j - 1, "l: ", j)
+        print("S=",s," is", aij, "/((", ajj, ")^2 + (", aij, ")^2)^(1/2)")
+        print("Now with accuracy 3:")
+        print("S=", round(s, self.sta), " is", round(aij, self.sta), "/((", round(ajj, self.sta), ")^2 + (", round(aij, self.sta), ")^2)^(1/2)")
+        #round(, self.sta)
         return s
         pass
 
@@ -284,8 +295,11 @@ class Givensrotation:
         c = round(ajj / math.sqrt(math.pow(ajj, 2) + math.pow(aij, 2)), self.accuracy)
         if math.fabs(c) < 1 / (10 ** self.accuracy):
             c = 0
-        print("C=",c," is", ajj, "/((", ajj, ")^2 + (", aij, ")^2)^(1/2)")
+        print("")
         print("i: ", i, "j: ", j - 1, "l: ", j)
+        print("C=",c," is", ajj, "/((", ajj, ")^2 + (", aij, ")^2)^(1/2)")
+        print("Now with accuracy 3:")
+        print("C=", round(c, self.sta), " is", round(ajj, self.sta), "/((", round(ajj, self.sta), ")^2 + (", round(aij, self.sta), ")^2)^(1/2)")
         return c
         pass
 
@@ -311,8 +325,13 @@ class Givensrotation:
                 print("i: ",i + 1, "j: ",j + 1)
                 print("S=", s, " is", H.getel(j,i), "/((", H.getel(i,i), ")^2 + (", H.getel(j,i), ")^2)^(1/2)")
                 print("C=", c, " is", H.getel(i, i), "/((", H.getel(i, i), ")^2 + (", H.getel(j, i), ")^2)^(1/2)")
+                print("Now with accuracy 3:")
+                print("S=", round(s, self.sta), " is", round(H.getel(j, i), self.sta), "/((", round(H.getel(i, i), self.sta), ")^2 + (", round(H.getel(j, i), self.sta), ")^2)^(1/2)")
+                print("C=", round(c, self.sta), " is", round(H.getel(i, i), self.sta), "/((", round(H.getel(i, i), self.sta), ")^2 + (", round(H.getel(j, i), self.sta), ")^2)^(1/2)")
                 print("Ok so we hawe Givense matrix... and it is allready transposed")
                 T.showmatrix()
+                print("Our matrix with accuracy: 3")
+                T.showmatrixaccuracy3()
 
                 self.q0.append(T)
 
@@ -331,10 +350,13 @@ class Givensrotation:
                 v2.mnumber(c, self.accuracy)
                 H.setrowm(j, v1.rowsummarize(v2, self.accuracy))
                 H.showmatrix()
+                print("Our matrix with accuracy: 3")
+                H.showmatrixaccuracy3()
                 j += 1
             i += 1
         print("End of II-part step")
         return H
+
     def uhessenberg(self, A):
         print("I-part Hessenberg matrix.")
         H = matrix.Matrix(A.matrix, "H-matrix")
@@ -351,17 +373,25 @@ class Givensrotation:
                 T = self.hmaket(H, l, i)
                 print("We have T-matrix")
                 T.showmatrix()
+                print("Our matrix with accuracy: 3")
+                T.showmatrixaccuracy3()
                 T.transpose()
                 H = T.matrixm(H, self.accuracy)
+                H.rename("H-matrix")
                 H.chel(i, j, 0)
                 T.transpose()
-                H.showmatrix()
                 print("New look of H-matrix after multiplication: T-transposed * H")
+                H.showmatrix()
+                print("Our matrix with accuracy: 3")
+                H.showmatrixaccuracy3()
                 #H0 = H.copy()
                 H = H.matrixm(T, self.accuracy)
+                H.rename("H-matrix")
                 #H.chel(i, j, 0)
                 print("New look of H-matrix after multiplication:  H * T")
                 H.showmatrix()
+                print("Our matrix with accuracy: 3")
+                H.showmatrixaccuracy3()
                 j += 1
             i += 1
         print("End of I-part step")
@@ -378,6 +408,8 @@ class Givensrotation:
                 T = self.maket(H, i, j)
                 H = T.matrixm(H, self.accuracy)
                 H.showmatrix()
+                print("Our matrix with accuracy: 3")
+                H.showmatrixaccuracy3()
                 i += 1
             j += 1
         return H
@@ -390,35 +422,28 @@ class Givensrotation:
         H = self.uhessenberg(H)
         print("II-part QR-factorization")
         H.showmatrix()
+        print("Our matrix with accuracy: 3")
+        H.showmatrixaccuracy3()
         while i < 100:
             print("Step----->", i + 1)
             R = self.lowzeroing(H)
             self.makeqm()
             print("New look of Q-matrix after multiplication:  Q * T")
             self.qm.showmatrix()
+            print("Our matrix with accuracy: 3")
+            self.qm.showmatrixaccuracy3()
             H.showmatrix()
+            print("Our matrix with accuracy: 3")
+            H.showmatrixaccuracy3()
             H = R.matrixm(self.qm, self.accuracy)
+            H.rename("H-matrix")
             H.showmatrix()
+            print("Our matrix with accuracy: 3")
+            H.showmatrixaccuracy3()
             i += 1
 
-    def resolve0(self):
-        self.am.showmatrix()
-        i = 0
-        H = matrix.Matrix(self.am.matrix, "H-matrix")
-        H = self.uhessenberg(H)
-
-        H.showmatrix()
-        while i < 100:
-            print(i, "----->")
-            H = self.ugivencerot(H)
-            self.makeqm()
-            self.qm.showmatrix()
-            H.showmatrix()
-            self.qm.transpose()
-            H = self.qm.matrixm(H, self.accuracy)
-            H.showmatrix()
-            i += 1
     def makeqm(self):
         while len(self.q0) > 0:
             T = self.q0.pop()
             self.qm = self.qm.matrixm(T, self.accuracy)
+            self.qm.rename("Q-matrix")

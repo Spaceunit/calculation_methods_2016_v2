@@ -46,6 +46,21 @@ class Matrix:
         print('\n'.join(table))
         print('')
 
+    def showmatrixaccuracy3(self):
+        print('')
+        #sh = self.copy()
+        accuracy = 3
+        matrix = self.matrix
+        print(self.name)
+        #for row in self.matrix:
+            #print(row)
+        s = [[str(round(e, accuracy)) for e in row] for row in matrix]
+        lens = [max(map(len, col)) for col in zip(*s)]
+        fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
+        table = [fmt.format(*row) for row in s]
+        print('\n'.join(table))
+        print('')
+
 
     def appendrow(self, rowlen):
         self.matrix.append([0 for i in range(0, rowlen)])
