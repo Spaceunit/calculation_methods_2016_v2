@@ -5,8 +5,13 @@ import Lab2.Lagrange.lagrange as lgr
 
 class Aitkenscheme:
     def __init__(self):
+        # For task v15:
+        # x = 1.188
         self.sta = 3
         self.a_matrix = matrix.Matrix([], "Initial matrix")
+        self.x_values = matrix.Vector([], "A bunch of x-values")
+        self.y_values = matrix.Vector([], "A bunch of y-values")
+        self.L = lgr.Lagrange()
         self.commands = {
             "none": 0,
             "exit": 1,
@@ -191,3 +196,7 @@ class Aitkenscheme:
 
     def resolve(self):
         self.a_matrix.showmatrix()
+        self.x_values.showvector()
+        self.y_values.showvector()
+
+    def count_L(self):
