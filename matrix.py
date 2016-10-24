@@ -377,6 +377,15 @@ class Matrix:
             r.appendel(self.getel(i, j))
         return r
 
+    def getminor2(self, i, j, vh_r):
+        minor = 0
+        if vh_r != None:
+            c = [i, j, i + 1 + vh_r[0], j + 1 + vh_r[1], i, j + 1 + vh_r[1], i + 1 + vh_r[0], j]
+        else:
+            c = [i, j, i + 1, j + 1, i, j + 1, i + 1, j]
+        minor = self.getel(c[0], c[0]) * self.getel(c[1], c[1]) - (self.getel(c[0], c[1]) * self.getel(c[1], c[0]))
+        return minor
+
 class Vector:
     def __init__(self, vector, name):
         self.name = name

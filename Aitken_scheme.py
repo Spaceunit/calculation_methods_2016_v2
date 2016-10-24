@@ -1,7 +1,7 @@
 import math
 import matrix
 import excel_transfer
-
+import Lab2.Lagrange.lagrange as lgr
 
 class Aitkenscheme:
     def __init__(self):
@@ -157,7 +157,7 @@ class Aitkenscheme:
         task = 0
         while (task != 1):
             print('')
-            print("QR (Lab1) method for matrix v0.0002 betta")
+            print("QR (Lab2) Aitken`s scheme method for function v0.0001 betta")
             print('')
             task = self.enterCommand()
             if (task == 2):
