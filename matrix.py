@@ -87,7 +87,15 @@ class Matrix:
         self.len[1] = len(self.matrix[-1])
 
     def appendnrow(self, row):
-        self.matrix.append(row)
+        array = [item for item in row]
+        self.matrix.append(array)
+        self.len[0] = len(self.matrix)
+        self.len[1] = len(self.matrix[-1])
+
+    def append_column(self, column):
+        array = [item for item in column]
+        for i in range(self.len[0]):
+            self.matrix[i].append(array[i])
         self.len[0] = len(self.matrix)
         self.len[1] = len(self.matrix[-1])
 

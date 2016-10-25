@@ -6,9 +6,10 @@ import Lab2.Lagrange.lagrange as lgr
 class Aitkenscheme:
     def __init__(self):
         # For task v15:
-        # x = 1.188
+        self.x = 0.0
         self.sta = 3
         self.a_matrix = matrix.Matrix([], "Initial matrix")
+        self.sheet = matrix.Matrix([], "Result matrix")
         self.x_values = matrix.Vector([], "A bunch of x-values")
         self.y_values = matrix.Vector([], "A bunch of y-values")
         self.L = lgr.Lagrange()
@@ -133,18 +134,20 @@ class Aitkenscheme:
 
         self.dv = matrix.Vector([5, 24.42, 36], "Vector B")
 
-    def makedafault(self):
+    def makedafault_old(self):
         self.exeldata = excel_transfer.Excel()
         self.am = self.exeldata.transferlist('square')
 
-    def importparam(self, exmatrix, accuracy):
+    def makedafault(self):
+        xk = [1.0, 1.08, 1.13, 1.20, 1.27, 1.31, 1.38]
+        self.x_values.setvector(vector=xk)
+        yk = [1.1752, 1.3025, 1.3863, 1.5095, 1.2173, 1.2236, 1.2347]
+        self.y_values.setvector(vector=yk)
+        self.x = 1.188
+
+    def importparam(self, accuracy):
         self.accuracy = accuracy
-        self.am = exmatrix.copy()
-        self.am.rename('Initial matrix')
-        self.um = self.am.copy()
-        self.um.rename('U-matrix')
-        self.im.makedimatrix(self.am.len[0])
-        # self.qmt.makedimatrix(self.am.len[0])
+        pass
 
     def setaccuracy(self):
         task = 0
@@ -199,4 +202,29 @@ class Aitkenscheme:
         self.x_values.showvector()
         self.y_values.showvector()
 
-    def count_L(self):
+    def count_l(self, previous):
+        values = [[0, 0], [0, 0]]
+        self.L.set_x(self.x)
+        N = self.x_values.len
+        i = 0
+        # With matrix
+        self.sheet.appendnrow([i for i in range(N)])
+        self.sheet.appendnrow(self.x_values.)
+        while i < (N - 1):
+            values[0][0] = self.y_values.getel(i)
+            values[0][1] = self.x_values.getel(i)
+            values[1][0] = self.y_values.getel(i + 1)
+            values[1][1] = self.x_values.getel(i + 1)
+            self.L.set_l(values=values)
+            i += 1
+
+        #self.l = (float(1) / float(1)) * self.m.getminor2(0, 0, vh_r=None)
+        #self.L.set_l(values=[[A, B], [C, D]])
+        return self.L.get_l()
+
+    def count_and_check(self):
+
+        pass
+
+    def count_row(self, i):
+        pass
