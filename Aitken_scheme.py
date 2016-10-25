@@ -10,6 +10,7 @@ class Aitkenscheme:
         self.sta = 3
         self.a_matrix = matrix.Matrix([], "Initial matrix")
         self.sheet = matrix.Matrix([], "Result matrix")
+        self.sheet_work = matrix.Matrix([], "Matrix in work")
         self.x_values = matrix.Vector([], "A bunch of x-values")
         self.y_values = matrix.Vector([], "A bunch of y-values")
         self.L = lgr.Lagrange()
@@ -202,29 +203,44 @@ class Aitkenscheme:
         self.x_values.showvector()
         self.y_values.showvector()
 
-    def count_l(self, previous):
+    def count_sheet_column(self, table_pos):
         values = [[0, 0], [0, 0]]
+        result = [0] * table_pos
         self.L.set_x(self.x)
         N = self.x_values.len
-        i = 0
+        i = table_pos
         # With matrix
-        self.sheet.appendnrow([i for i in range(N)])
-        self.sheet.appendnrow(self.x_values.)
         while i < (N - 1):
-            values[0][0] = self.y_values.getel(i)
-            values[0][1] = self.x_values.getel(i)
-            values[1][0] = self.y_values.getel(i + 1)
-            values[1][1] = self.x_values.getel(i + 1)
+            values[0][0] = self.sheet.getel(i, table_pos)
+            values[0][1] = self.sheet.getel(i, table_pos)
+            values[1][0] = self.sheet.getel(i + 1, table_pos)
+            values[1][1] = self.sheet.getel(i + 1, table_pos)
+
             self.L.set_l(values=values)
+            result.append()
+            self.sheet_work.append_column()
             i += 1
+
+
+
 
         #self.l = (float(1) / float(1)) * self.m.getminor2(0, 0, vh_r=None)
         #self.L.set_l(values=[[A, B], [C, D]])
         return self.L.get_l()
 
-    def count_and_check(self):
+    def prepare_sheet(self):
+        N = self.x_values.len
+        difference = [(self.x_values.vector[item] - self.x) for item in range(N)]
+        self.sheet.appendnrow([i for i in range(N)])
+        self.sheet.appendnrow(self.x_values.vector)
+        self.sheet.appendnrow(self.y_values.vector)
+        self.sheet.appendnrow(difference)
 
-        pass
+    def count_and_check(self):
+        i = 0
+        difference = self.accuracy * 2
+        while difference >= self.accuracy:
+            self.count_sheet_column(i)
 
     def count_row(self, i):
         pass
