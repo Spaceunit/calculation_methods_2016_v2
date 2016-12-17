@@ -152,6 +152,7 @@ class Work:
     def makedafault(self):
         self.exeldata = excel_transfer.Excel()
         self.a = self.exeldata.transferlist('square')
+        self.accuracy = 3
 
 
 Some = Work()
