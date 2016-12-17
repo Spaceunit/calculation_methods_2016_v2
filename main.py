@@ -22,7 +22,8 @@ class Work:
             "mk": 9,
             "LU": 10,
             "GR": 11,
-            "QR": 12
+            "QR": 12,
+            "LVE": 13
 
         }
         pass
@@ -84,6 +85,10 @@ class Work:
                 Lab1.importparam(self.a, self.accuracy)
                 Lab1.dostaff()
             elif (task == 12):
+                Lab1 = qrf.QRF()
+                Lab1.importparam(self.a, self.accuracy)
+                Lab1.dostaff()
+            elif (task == 13):
                 Lab1 = qrf.QRF()
                 Lab1.importparam(self.a, self.accuracy)
                 Lab1.dostaff()
