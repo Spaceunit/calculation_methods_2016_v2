@@ -4,6 +4,11 @@ import excel_transfer
 import lu
 import givensrotation
 import qrf
+import LVE
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import mlab
 
 class Work:
     def __init__(self):
@@ -89,9 +94,9 @@ class Work:
                 Lab1.importparam(self.a, self.accuracy)
                 Lab1.dostaff()
             elif (task == 13):
-                Lab1 = qrf.QRF()
-                Lab1.importparam(self.a, self.accuracy)
-                Lab1.dostaff()
+                Lab4 = LVE.LVE()
+                Lab4.importparam(self.accuracy)
+                Lab4.dostaff()
         pass
 
     def inputnewdata(self):
